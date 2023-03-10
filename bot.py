@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands,tasks
-from datetime import datetime
+import datetime
 import os
 import psutil
 import netifaces as ni
@@ -18,7 +18,7 @@ current_dateTime = datetime.now()
 #ex:?hello
 bot = commands.Bot(command_prefix='?', intents=intents) 
 
-@tasks.loop(minutes=1)
+@tasks.loop(minutes=1)      ##send message every 1 minute
 async def autoping():
     modmail_channel = await bot.fetch_channel('Channel ID Here')                         ##change xxx below with your bot client id
     embed = discord.Embed(title=f"{bot.user}",url="https://discord.com/api/oauth2/authorize?client_id=xxxxxxxxx&permissions=8&scope=bot%20applications.commands", description="Discord Server Monitor", color=0x00aaff)
@@ -27,7 +27,7 @@ async def autoping():
     embed.add_field(name="RAM",value=f"{psutil.virtual_memory().percent}%")
     embed.add_field(name="Disk",value=f"{psutil.disk_usage('/').percent}%")
     embed.add_field(name="IP Address",value=f"{ip}")
-    embed.set_footer(text=f'Time : {current_dateTime.hour}:{current_dateTime.minute} -- {current_dateTime.day}/{current_dateTime.month}/{current_dateTime.year}')
+    embed.set_footer(text=f'Time : {datetime.datetime.now()}')
     await modmail_channel.send(embed=embed)
 
 
